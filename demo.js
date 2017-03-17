@@ -11,6 +11,7 @@ function onload(){
             var mid = "m" + String(i);
             var moji = document.getElementById(mid);
             moji.addEventListener("click", listener, false);
+
             var left = 135+120*Math.sin((i)*Math.PI/6);
             var top = 15+120-(120*Math.cos((i)*Math.PI/6));
             moji.style = "left: "+left+"px; top: "+top+"px";
@@ -68,7 +69,7 @@ function onload(){
             c.globalAlpha = "1"
             c.textAlign = "center"
             c.font = "bold 20px Meryo";
-            c.fillText("C Major", 150,150+10);
+            c.fillText(choad(flags), 150,150+10);
         }
 
         function listener(e){
@@ -85,4 +86,53 @@ function onload(){
             draw();
         }
     }
+};
+
+function choad(fls){
+    //とりあえずルートCのときの設定
+    var root = 0; //とりあえずC
+    var letter = "";
+    var i = 0;
+    switch(root){
+        case 0: letter = "C"; break;
+        default:
+    }
+    root++;
+    i++;
+    var third = 0;
+    var seventh = 0;
+    while (i < 12) {
+        var index = root % 12;
+        if(i === 3 && fls[index]){
+            letter += "m";
+            third = 1;
+        }
+        else if (i === 4 && fls[index]){
+            if(third){
+                letter = "?";
+                third = 0;
+            }
+            else {
+                third = 1;
+            }
+        }
+        
+        if(i === 10 && fls[index] && third){
+            letter += "7"
+            seventh = 1;
+        }
+        else if(i === 11 && fls[index] && third){
+            if(seventh){
+                letter = "?";
+                tseventh = 0;
+            }
+            else {
+                letter += "M7"
+                seventh = 1;
+            }
+        }
+        ++i;
+        ++root;
+    }
+    return letter;
 };
