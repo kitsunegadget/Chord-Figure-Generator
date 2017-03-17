@@ -90,7 +90,7 @@ function onload(){
 
 function choad(fls,rt){
     //とりあえずルートCのときの設定
-    var root = rt; //とりあえずC
+    var root = 0; //とりあえずC
     var letter = "";
     var i = 0;
     switch(root){
