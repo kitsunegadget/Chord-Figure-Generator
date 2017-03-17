@@ -69,7 +69,7 @@ function onload(){
             c.globalAlpha = "1"
             c.textAlign = "center"
             c.font = "bold 20px Meryo";
-            c.fillText(choad(flags), 150,150+10);
+            c.fillText(choad(flags,0), 150,150+10);
         }
 
         function listener(e){
@@ -88,9 +88,9 @@ function onload(){
     }
 };
 
-function choad(fls){
+function choad(fls,rt){
     //とりあえずルートCのときの設定
-    var root = 0; //とりあえずC
+    var root = rt; //とりあえずC
     var letter = "";
     var i = 0;
     switch(root){
