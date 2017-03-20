@@ -4,17 +4,25 @@ function onload(){
         var c = cv.getContext("2d")
 
         var flags = [];
+        var root = 0;
         //フラグ初期化 & イベントリスナ追加
         for(var i = 0; i < 12; ++i){
             flags.push(false);
 
             var mid = "m" + String(i);
+            var rid = "r" + String(i);
             var moji = document.getElementById(mid);
-            moji.addEventListener("click", listener, false);
+            var root_moji = document.getElementById(rid);
+            moji.addEventListener("click", listenerM, false);
+            root_moji.addEventListener("click", listenerR, false);
 
-            var left = 135+120*Math.sin((i)*Math.PI/6);
-            var top = 15+120-(120*Math.cos((i)*Math.PI/6));
+            var left = 185+120*Math.sin((i)*Math.PI/6);
+            var top = 65+120-(120*Math.cos((i)*Math.PI/6));
             moji.style = "left: "+left+"px; top: "+top+"px";
+
+            var left_ = 185+155*Math.sin((i)*Math.PI/6);
+            var top_ = 65+120-(155*Math.cos((i)*Math.PI/6));
+            root_moji.style = "left: "+left_+"px; top: "+top_+"px";
         }
 
         document.getElementById("reset").onclick=function(){
@@ -25,7 +33,7 @@ function onload(){
                 draw();
             }
         };
-
+        document.getElementById("r0").children[0].firstChild.style = "color: #f00";
         draw();
 
         //図形の描画ポイント指定
@@ -34,29 +42,29 @@ function onload(){
             flags.forEach(function (item, index, array){
                 //12角形なので30°ごとに進む
                 if(item && first){
-                    c.moveTo(150+100*Math.sin((index)*Math.PI/6),50+100-(100*Math.cos((index)*Math.PI/6)));
+                    c.moveTo(200+100*Math.sin((index)*Math.PI/6),100+100-(100*Math.cos((index)*Math.PI/6)));
                     first = false;
                 }
                 else if (item){
-                    c.lineTo(150+100*Math.sin((index)*Math.PI/6),50+100-(100*Math.cos((index)*Math.PI/6)));
+                    c.lineTo(200+100*Math.sin((index)*Math.PI/6),100+100-(100*Math.cos((index)*Math.PI/6)));
                 }
             });
         }
 
         //描画
         function draw(){
-            //キャンバスサイズは300x300     
-            c.clearRect(0,0,300,300);//初期化
+            //キャンバスサイズは400x400     
+            c.clearRect(0,0,400,400);//初期化
 
             c.strokeStyle = "red";
             c.lineWidth = "2";
             c.globalAlpha = "0.5"
 
             c.beginPath();
-            c.arc(150,150, 100, 0, 2*Math.PI, false);
+            c.arc(200,200, 100, 0, 2*Math.PI, false);
             c.stroke();
 
-            var style = choad(flags,0);//コード識別
+            var style = choad(flags,root);//コード識別
 
             c.strokeStyle = "purple";
             c.fillStyle = style[1];
@@ -71,10 +79,10 @@ function onload(){
             c.globalAlpha = "1"
             c.textAlign = "center"
             c.font = "bold 20px Meryo";
-            c.fillText(style[0], 150,150+10);
+            c.fillText(style[0], 200,200+10);
         }
 
-        function listener(e){
+        function listenerM(e){
             var vid = e.currentTarget.id.split("m")[1];
             flags[vid] = !flags[vid];
             if(flags[vid]){
@@ -87,21 +95,43 @@ function onload(){
             //console.log(e.currentTarget.id.split("m")[1]);
             draw();
         }
+        function listenerR(e){
+            var vid = e.currentTarget.id.split("r")[1];
+            root = Number(vid);
+            for(var i = 0; i < 12; ++i){
+                var rid = "r" + String(i);
+                document.getElementById(rid).children[0].firstChild.style = "color: #000";
+            }
+            e.target.style = "color: #f00";
+            draw();
+        }
     }
 };
 
 function choad(fls,rt){
     //とりあえずルートCのときの設定
-    var root = 0; //とりあえずC
+    var root = rt; //とりあえずC
     var letter = "";
     var fillcolor = "";
     var i = 0;
+    if (!fls[root] ) {
+        return [letter, fillcolor];
+    }
     switch(root){
-        case 0: letter="C"; fillcolor="green"; break;
+        case 0: letter="C"; break;
         case 1: letter="C#"; break;
-        case 2: letter="D"; fillcolor="yellow"; break;
-        case 3: 
+        case 2: letter="D"; break;
+        case 3: letter="D#"; break;
+        case 4: letter="E"; break;
+        case 5: letter="F"; break;
+        case 6: letter="F#"; break;
+        case 7: letter="G"; break;
+        case 8: letter="G#"; break;
+        case 9: letter="A"; break;
+        case 10: letter="A#"; break;
+        case 11: letter="B"; break;
         default:
+        console.log("error");
     }
     root++;
     i++;

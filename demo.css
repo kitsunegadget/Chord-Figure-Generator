@@ -55,7 +55,7 @@ header ul {
 
 .moji {
     position: relative;
-    width: 300px;
+    width: 400px;
     height: 0px;
     margin: auto;
     text-align: center;
@@ -130,12 +130,12 @@ header ul {
 }
 */
 .moji #reset {
-    width: 60px;
-    height: 25px;
+    width: 100px;
+    height: 30px;
     padding: 1px 5px 1px 5px;
-    top: 268px;
-    left: 225px;
-    line-height: 26px;
+    top: 350px;
+    left: 280px;
+    line-height: 30px;
     border: solid #333 1.5px;
     border-radius: 7px;
     color: #111;
