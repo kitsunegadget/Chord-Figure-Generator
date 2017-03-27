@@ -108,13 +108,12 @@ function onload(){
     }
 };
 
-function choad(fls,rt){
-    //とりあえずルートCのときの設定
-    var root = rt; //とりあえずC
+function choad(fls,rt){ //コード識別 オートマトン的な考えで…
+    var root = rt; 
     var letter = "";
     var fillcolor = "";
     var i = 0;
-    if (!fls[root] ) {
+    if (!fls[root] ) { //ルートがチェックしてあっても同じ音にチェックがなければ、不明にする。
         return [letter, fillcolor];
     }
     switch(root){
@@ -141,6 +140,8 @@ function choad(fls,rt){
     var fifth = 0;
     var sixth = 0;
     var seventh = 0;
+    //フラグを2進数管理してもいいかも？？？
+    //ルート音から半音ずつ判断して、決める。9度以上については1周超えるのでいまのところ実装予定は無し。
     while (i < 12) {
         var index = root % 12;
         if(i === 1 && fls[index]){
@@ -171,7 +172,7 @@ function choad(fls,rt){
             else if(i === 11 && fls[index] && third){
                 if(seventh){
                     letter = "?";
-                    tseventh = 0;
+                    seventh = 0;
                 }
                 else {
                     letter += "M7"
