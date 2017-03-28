@@ -140,14 +140,23 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
     var fifth = 0;
     var sixth = 0;
     var seventh = 0;
+    var ch = 0x0;
     //フラグを2進数管理してもいいかも？？？
     //ルート音から半音ずつ判断して、決める。9度以上については1周超えるのでいまのところ実装予定は無し。
     while (i < 12) {
         var index = root % 12;
+
         if(i === 1 && fls[index]){
             letter = "?"
             outscale = true;
+            fillcolor = "gray";
         }
+        else if (i === 2 && fls[index]){
+            letter = "?"
+            outscale = true;
+            fillcolor = "gray";
+        }
+
         if(!outscale){
             if(i === 3 && fls[index]){
                 letter += "m";
@@ -156,27 +165,86 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
             else if (i === 4 && fls[index]){
                 if(third){
                     letter = "?";
-                    third = 0;
-                    fillcolor = "gray"
+                    fillcolor = "gray";
                 }
                 else {
                     third = 1;
                     fillcolor = "orange"
                 }
             }
-
-            if(i === 10 && fls[index] && third){
-                letter += "7"
-                seventh = 1;
-            }
-            else if(i === 11 && fls[index] && third){
-                if(seventh){
+            else if(i === 5 && fls[index]){
+                if(third){
                     letter = "?";
-                    seventh = 0;
+                    fillcolor = "gray";
+                    third = 0;
                 }
                 else {
+                    letter += "sus4";
+                    third = 0;
+                    fillcolor = "pink";
+                }
+            }
+
+            if(i === 6 && fls[index]){
+                if(letter.match(/[A-G]#*m/) != null){
+                    letter = letter.substr(0, letter.length-1) + "dim";
+                    fifth = 1;
+                }
+                else {
+                    letter = "?";
+                    fillcolor = "gray";
+                }
+            }
+            else if (i === 7 && fls[index]){
+                if(fifth){
+                    letter = "?";
+                    fillcolor = "gray";
+                }
+                else {
+                    fifth = 1;
+                }
+            }
+            else if (i === 8 && fls[index]){
+                if(letter.match(/[A-G]#*/) != null){ //#の先も文字がある場合もマッチするので要修正
+                    letter = letter + "aug";
+                    fifth = 1;
+                }
+                else {
+                    letter = "?";
+                    fillcolor = "gray";
+                }
+            }
+
+            if(i === 9 && fls[index]){
+                if(third) {
+                    letter += "6";
+                    fillcolor = "purple";
+                    sixth = 1;
+                }
+                else {
+                    letter = "?";
+                    fillcolor = "gray";
+                }
+            }
+
+            if(i === 10 && fls[index] && third){
+                if(!sixth){
+                    letter += "7"
+                    seventh = 1;
+                }
+                else{
+                    letter = "?";
+                    fillcolor = "gray";
+                }
+            }
+            else if(i === 11 && fls[index] && third){
+                if(!sixth && !seventh){
                     letter += "M7"
                     seventh = 1;
+                }
+                else {
+                    letter = "?";
+                    fillcolor = "gray";
                 }
             }
         }
