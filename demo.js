@@ -137,6 +137,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
     var outscale = false;
     var second = 0;
     var third = 0;
+    var fourth = 0;
     var fifth = 0;
     var sixth = 0;
     var seventh = 0;
@@ -146,26 +147,22 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
     while (i < 12) {
         var index = root % 12;
 
-        if(i === 1 && fls[index]){
-            letter = "?"
-            outscale = true;
-            fillcolor = "gray";
-        }
-        else if (i === 2 && fls[index]){
-            letter = "?"
-            outscale = true;
-            fillcolor = "gray";
-        }
-
         if(!outscale){
+            if(i === 1 && fls[index]){
+                outscale = true;
+            }
+            else if (i === 2 && fls[index]){
+                outscale = true;
+            }
+
             if(i === 3 && fls[index]){
                 letter += "m";
                 third = 1;
+                fillcolor = "blue"
             }
             else if (i === 4 && fls[index]){
                 if(third){
-                    letter = "?";
-                    fillcolor = "gray";
+                    outscale = true;
                 }
                 else {
                     third = 1;
@@ -174,13 +171,12 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
             }
             else if(i === 5 && fls[index]){
                 if(third){
-                    letter = "?";
-                    fillcolor = "gray";
-                    third = 0;
+                    outscale = true;
                 }
                 else {
                     letter += "sus4";
-                    third = 0;
+                    third = 1;
+                    fourth = 1;
                     fillcolor = "pink";
                 }
             }
@@ -191,14 +187,12 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
                     fifth = 1;
                 }
                 else {
-                    letter = "?";
-                    fillcolor = "gray";
+                    outscale = true;
                 }
             }
             else if (i === 7 && fls[index]){
                 if(fifth){
-                    letter = "?";
-                    fillcolor = "gray";
+                    outscale = true;
                 }
                 else {
                     fifth = 1;
@@ -210,8 +204,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
                     fifth = 1;
                 }
                 else {
-                    letter = "?";
-                    fillcolor = "gray";
+                    outscale = true;
                 }
             }
 
@@ -222,8 +215,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
                     sixth = 1;
                 }
                 else {
-                    letter = "?";
-                    fillcolor = "gray";
+                    outscale = true;
                 }
             }
 
@@ -233,8 +225,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
                     seventh = 1;
                 }
                 else{
-                    letter = "?";
-                    fillcolor = "gray";
+                    outscale = true;
                 }
             }
             else if(i === 11 && fls[index] && third){
@@ -242,11 +233,15 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
                     letter += "M7"
                     seventh = 1;
                 }
-                else {
+                else { //12回目のときはoutscaleの外になってもループが終わるのでここで処理
                     letter = "?";
                     fillcolor = "gray";
                 }
             }
+        }
+        else {
+            letter = "?";
+            fillcolor = "gray";
         }
         ++i;
         ++root;
