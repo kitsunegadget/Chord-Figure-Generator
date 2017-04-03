@@ -182,7 +182,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
             }
 
             if(i === 6 && fls[index]){
-                if(letter.match(/[A-G]#*m/) != null){
+                if(letter.match(/[A-G]#?m/) != null){
                     letter = letter.substr(0, letter.length-1) + "dim";
                     fifth = 1;
                 }
@@ -199,7 +199,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
                 }
             }
             else if (i === 8 && fls[index]){
-                if(letter.match(/[A-G]#*/) != null){ //#の先も文字がある場合もマッチするので要修正
+                if(letter.match(/[A-G]#?(?![a-z])/) != null && !fifth){
                     letter = letter + "aug";
                     fifth = 1;
                 }
@@ -221,6 +221,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
 
             if(i === 10 && fls[index] && third){
                 if(!sixth){
+                    fillcolor = "red";
                     letter += "7"
                     seventh = 1;
                 }
@@ -230,6 +231,7 @@ function choad(fls,rt){ //コード識別 オートマトン的な考えで…
             }
             else if(i === 11 && fls[index] && third){
                 if(!sixth && !seventh){
+                    fillcolor = "red";
                     letter += "M7"
                     seventh = 1;
                 }

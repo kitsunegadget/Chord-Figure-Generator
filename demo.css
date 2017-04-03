@@ -53,6 +53,8 @@ header ul {
 }
 
 .main {
+    position: absolute;
+    top: 50px;
     width: 800px;
     left: 0;
     right: 0;
